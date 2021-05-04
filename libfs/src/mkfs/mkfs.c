@@ -155,8 +155,10 @@ int main(int argc, char *argv[])
 		storage_mode = NVM;
 	}
 
-	// Bypass dev-dax mmap problem: use actual device size - 550 MB.
-	file_size_bytes = dev_size[dev_id] - (550 << 20);
+	// Bypass dev-dax mmap problem: use actual device size - 4MB 
+	// 4 MB seems to be minimum for 128MB devices; not sure about larger
+	// file_size_bytes = dev_size[dev_id] - (550 << 20);
+	file_size_bytes = dev_size[dev_id] - (4 << 20);
 	file_size_blks = file_size_bytes >> g_block_size_shift;
 
 	if(dev_id == g_log_dev) {
@@ -427,6 +429,8 @@ exit:
 	else if (storage_mode == HDD)
 		//storage_hdd.commit(dev_id, 0, 0, 0, 0);
 		storage_hdd.commit(dev_id);
+
+	printf("mkfs done\n");
 
 	exit(0);
 }
