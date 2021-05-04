@@ -24,7 +24,7 @@ HDER := $(foreach sdir, $(SRC_DIR), $(wildcard $(sdir)/*.h)) $(wildcard storage/
 ########
 #  Lib directories
 ########
-NVML_DIR := $(abspath $(LIBFS_DIR)/lib/nvml/src)
+PMDK_DIR := $(abspath $(LIBFS_DIR)/lib/pmdk/src)
 DPDK_DIR := $(abspath $(LIBFS_DIR)/lib/dpdk-16.07/x86_64-native-linuxapp-gcc)
 SPDK_ROOT_DIR := $(abspath $(CURDIR)/lib/spdk)
 CUCKOO_FILTER_DIR := $(abspath $(LIBFS_DIR)/lib/cuckoofilter)
@@ -36,9 +36,9 @@ RDMA_DIR := $(abspath $(LIBFS_DIR)/lib/rdma)
 RDMA_CORE_DIR := $(abspath $(LIBFS_DIR)/lib/rdma-core/build/include)
 RDMA_CORE_DIR_LIB := $(abspath $(LIBFS_DIR)/lib/rdma-core/build/lib)
 
-INCLUDES  := $(addprefix -I, . $(NVML_DIR)/include $(CUCKOO_DIR) $(CUCKOO_FILTER_DIR)/src $(GLIB_DIR)/ $(GLIB_DIR)/glib $(RDMA_DIR) $(RDMA_CORE_DIR) $(SPDK_ROOT_DIR)/include)
+INCLUDES  := $(addprefix -I, . $(PMDK_DIR)/include $(CUCKOO_DIR) $(CUCKOO_FILTER_DIR)/src $(GLIB_DIR)/ $(GLIB_DIR)/glib $(RDMA_DIR) $(RDMA_CORE_DIR) $(SPDK_ROOT_DIR)/include)
 
-LD_FLAGS = -lpthread -laio -lstdc++ -lm -L$(NVML_DIR)/nondebug/ -lpmem -lrt -L$(RDMA_DIR) -Wl,-rpath=$(abspath $(RDMA_DIR)) -L$(RDMA_CORE_DIR_LIB) -Wl,-rpath=$(abspath $(RDMA_CORE_DIR_LIB)) -lrdma -lrdmacm -libverbs -ldl -luuid -lnuma -L$(SPDK_ROOT_DIR) -Wl,-rpath=$(abspath $(SPDK_ROOT_DIR))
+LD_FLAGS = -lpthread -laio -lstdc++ -lm -L$(PMDK_DIR)/nondebug/ -lpmem -lrt -L$(RDMA_DIR) -Wl,-rpath=$(abspath $(RDMA_DIR)) -L$(RDMA_CORE_DIR_LIB) -Wl,-rpath=$(abspath $(RDMA_CORE_DIR_LIB)) -lrdma -lrdmacm -libverbs -ldl -luuid -lnuma -L$(SPDK_ROOT_DIR) -Wl,-rpath=$(abspath $(SPDK_ROOT_DIR))
 
 #MLFS_FLAGS = -DUSE_SLAB -DMLFS_INFO -DKERNFS
 MLFS_FLAGS = -DKERNFS
