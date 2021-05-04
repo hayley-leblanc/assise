@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 from __future__ import print_function
 
@@ -6,7 +6,8 @@ import os
 import re
 import sys
 
-GB = 1024 ** 3
+# GB = 1024 ** 3
+MB = 1024 ** 2
 
 def main():
   if len(sys.argv) < 4:
@@ -29,14 +30,15 @@ def main():
     return -1
 
   f_contents = str()
-  with open(storage_h, "r+b") as f:
+  with open(storage_h, "r+") as f:
     f_contents = f.read()
 
     pattern = r'(^static uint64\_t dev\_size[^{}]*) {[^{}]*}(.*)'
     replace = r'\1 {0UL'
 
     for i in range(1,len(sys.argv)):
-        replace += r', {}UL'.format(int(sys.argv[i]) * GB)
+        # replace += r', {}UL'.format(int(sys.argv[i]) * GB)
+        replace += r', {}UL'.format(int(sys.argv[i]) * MB)
 
     replace += r'}\2'
 
